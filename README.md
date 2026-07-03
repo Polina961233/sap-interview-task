@@ -8,7 +8,7 @@ This repository contains a full-stack interview task:
 
 For the candidate-facing QA assignment brief, see:
 
-- [`README-QA-TASK.md`](/Users/C5399957/Documents/Code/sap-interview-task/README-QA-TASK.md)
+- [`README-QA-TASK.md`](/README-QA-TASK.md)
 
 ## Features
 
@@ -50,7 +50,7 @@ To wipe and recreate Postgres + Qdrant data, then re-run migrations:
 npm run db:reset
 ```
 
-This command executes [`scripts/reset-databases.sh`](/Users/C5399957/Documents/Code/sap-interview-task/scripts/reset-databases.sh).
+This command executes [`scripts/reset-databases.sh`](/scripts/reset-databases.sh).
 
 ## Backend setup
 
