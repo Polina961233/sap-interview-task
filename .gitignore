@@ -1,0 +1,8 @@
+node_modules
+bun.lockb
+package-lock.json
+.env
+*.log
+backend/uploads
+frontend/dist
+backend/dist

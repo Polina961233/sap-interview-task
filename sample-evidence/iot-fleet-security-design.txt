@@ -1,0 +1,34 @@
+IoT Device Fleet Security Design and Operational Controls
+
+System Overview
+The IoT platform manages a large fleet of field devices used for environmental monitoring, telemetry collection, and remote diagnostics. The architecture includes device firmware, edge gateways, cloud ingestion services, telemetry pipelines, and operations dashboards. Security controls focus on device identity assurance, command integrity, and resilience in hostile network environments.
+
+Device Identity and Trust Bootstrapping
+Each device is provisioned at manufacturing time with a hardware root of trust and a unique device certificate. During first boot, devices perform attestation and enroll with fleet control services using mutually authenticated TLS. Enrollment tokens are one-time use and bound to serial number and manufacturing batch metadata.
+
+Authentication Model
+The primary model is certificate-based authentication for machine-to-machine communication. Human operators authenticate through a centralized identity provider with role-based access to fleet controls. Operational roles include Fleet Viewer, Device Operator, Firmware Publisher, and Security Administrator.
+
+Password Usage Context
+Most device-facing workflows are certificate-based and do not rely on passwords. However, certain maintenance portals for regional support teams still use password authentication where federation is not available. In those areas, password controls are currently set to a minimum length of 12 characters and require complexity rules. A migration plan is active to remove password-only access and replace it with federated login and hardware-backed second factors.
+
+Credential Lifecycle and Rotation
+Device certificates are rotated automatically on a scheduled cadence and can be revoked immediately in case of compromise indicators. Support portal passwords expire every 90 days, and failed login thresholds trigger temporary lockouts with incident notifications. Break-glass credentials are vaulted and require dual approval for checkout.
+
+Command and Update Security
+All remote commands are signed, timestamped, and validated against nonce windows to reduce replay risk. Firmware update packages are code-signed and verified on device before installation. Rollout strategies use phased deployments with health checks and automatic rollback for error thresholds.
+
+Data Protection
+Telemetry data is encrypted in transit and partitioned by tenant in storage. Sensitive metadata fields are tokenized before analytics processing. Long-term archives are encrypted and governed by retention policy aligned with contractual obligations.
+
+Operational Monitoring
+Security monitoring includes device behavior baselines, certificate anomaly detection, firmware integrity status, and unusual command distribution patterns. Alerting integrates with incident response tooling and ticketing systems for triage and remediation.
+
+Resilience and Recovery
+The platform is designed for degraded operation during intermittent network outages. Devices buffer telemetry locally with signed envelopes and forward once connectivity returns. Recovery procedures include certificate re-issuance, compromised firmware quarantine, and regional failover for control endpoints.
+
+Governance and Auditability
+Every privileged action in fleet operations is logged with actor identity, timestamp, target resource, and request correlation ID. Audit trails support forensic investigation and regulatory reporting. Security exceptions are centrally tracked with owner, rationale, and sunset timeline.
+
+Summary
+The IoT fleet security implementation prioritizes cryptographic identity, signed command channels, and operational detection. Passwords are minimized but still present in legacy support workflows; strength requirements are enforced while the platform transitions toward stronger federated and phishing-resistant methods.

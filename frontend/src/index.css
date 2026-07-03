@@ -1,0 +1,100 @@
+:root {
+  --bg: #f4efe6;
+  --surface: #fffaf2;
+  --ink: #1d1a17;
+  --muted: #655d55;
+  --line: #dacfc1;
+  --accent: #2d6a4f;
+  --accent-ink: #f6fff9;
+  --danger: #b42318;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 10%, #fef7ec 0%, transparent 30%),
+    radial-gradient(circle at 90% 90%, #eaf5f0 0%, transparent 30%),
+    var(--bg);
+}
+
+.container {
+  width: min(1100px, 95vw);
+  margin: 0 auto;
+  padding: 1.5rem 0 3rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.appear {
+  animation: fadeUp 0.35s ease-out;
+}
+
+.auth-lock-container {
+  position: relative;
+}
+
+.auth-lock-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: rgba(255, 250, 242, 0.75);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.auth-lock-overlay__label {
+  background: #1d1a17;
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}

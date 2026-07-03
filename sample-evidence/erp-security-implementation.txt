@@ -1,0 +1,34 @@
+Enterprise Resource Planning (ERP) Security Architecture and Implementation Notes
+
+System Overview
+The ERP platform supports procurement, finance, payroll, inventory, and supplier management workflows across multiple regions. The system is implemented as a modular service-oriented application with strict segregation between business domains. Each domain service is exposed through a gateway and all ingress traffic is inspected by a policy enforcement point that validates authentication, authorization scope, request shape, and origin trust level.
+
+Identity and Access Management
+Identity is centralized in an internal identity provider with SSO support for web users and scoped service credentials for machine integrations. Human accounts are grouped by role collections such as Accounts Payable Analyst, Procurement Manager, Payroll Reviewer, and Finance Admin. Access is denied by default, and all entitlements are provisioned through approved role templates. Emergency access is available through time-limited privilege elevation with secondary approval.
+
+Password and Credential Controls
+For users that authenticate with username and password (when SSO fallback is used), the platform enforces a minimum password length of 14 characters. Password strength checks require mixed character classes and reject known breached passwords via an offline deny-list synced weekly from curated intelligence feeds. Password hashing is implemented using Argon2id with environment-specific parameters tuned for latency and resistance to GPU cracking. Service credentials are never stored in source control and are distributed through a vault with automatic rotation.
+
+Additional Password Strength Notes
+Historically, the ERP system accepted passwords down to 10 characters, but this was changed after an internal red team exercise demonstrated practical attack paths against weak user-selected secrets. Current guidance to business users recommends passphrases of 16 to 24 characters when possible. Password reset flows require one-time links with short expiration windows, anti-replay checks, and challenge verification based on enrolled factors.
+
+Session Security
+Web sessions are bound to secure, httpOnly cookies and are renewed on sensitive operation boundaries. Session identifiers are rotated after authentication and privilege changes. Inactivity timeout is 15 minutes for high-risk roles and 30 minutes for low-risk roles. Concurrent sessions are monitored and anomalous geolocation transitions trigger risk scoring and optional step-up authentication.
+
+Data Protection
+Data in transit uses TLS 1.2+ with modern cipher suites and strict transport security enabled. Data at rest for operational databases uses managed encryption with customer-controlled keys. Backups are encrypted, integrity checked, and retained under policy by data class. Finance exports are additionally signed and audited before external transfer.
+
+API and Integration Security
+All API integrations require scoped tokens and request signing for critical operations such as payment initiation and supplier bank detail updates. Sensitive endpoints apply idempotency controls, replay protection, and request schema validation. Third-party integrations run under dedicated integration identities with constrained permissions and a clear owner mapped in governance records.
+
+Monitoring, Logging, and Detection
+The system emits structured audit logs for login events, entitlement changes, vendor master updates, invoice approvals, and payroll adjustments. Security telemetry is streamed to a centralized SIEM. Detection rules identify unusual transaction velocity, privilege escalations, and repeated authentication failures. Logs are immutable and retained based on regulatory and internal policy requirements.
+
+Secure Development and Change Management
+All production changes require peer review, automated security scanning, and change approval in the release workflow. Dependency vulnerability checks run on each merge and release branch. Runtime hardening standards are validated through baseline controls, and exceptions must be risk accepted with an expiration date.
+
+Incident Response and Recovery
+Documented incident playbooks exist for credential compromise, unauthorized payment activity, and data exposure. Tabletop exercises are conducted quarterly with stakeholders from security, finance, and legal. Recovery procedures include key rotation, session revocation, rollback plans, and communication templates.
+
+Summary
+The ERP system security design combines layered controls across identity, password hardening, authorization, cryptographic protection, observability, and governance. Special attention is given to password strength and storage posture due to the sensitivity of financial workflows and the high impact of compromised finance identities.

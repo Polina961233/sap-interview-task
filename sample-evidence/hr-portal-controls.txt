@@ -1,0 +1,34 @@
+Human Resources Portal Security Controls and Compliance Notes
+
+System Overview
+The HR portal handles employee records, compensation changes, leave requests, and onboarding workflows. The platform integrates with payroll systems, document storage, background screening providers, and identity governance services. Due to the sensitivity of personal and employment data, controls are designed around confidentiality, accountability, and least privilege.
+
+Access Control Model
+Role-based access is combined with attribute-based conditions. HR specialists can access employee records for assigned regions. Managers can access records for direct reports with constrained views. Compensation actions require maker-checker approval and are restricted to authorized roles with periodic recertification.
+
+Authentication and Password Policy
+The preferred authentication method is SSO with MFA. For external contractor users without federation, password-based login is permitted with strict policy controls. Current contractor password requirements specify a minimum length of 15 characters and encourage passphrase construction over short complex strings. Password strength validation checks entropy heuristics and blocks known compromised passwords before acceptance.
+
+Password Storage and Verification
+Passwords are never stored in plaintext and are hashed with bcrypt using a cost factor reviewed during annual security tuning. Salts are unique per credential record. Password verification occurs only through secure server-side comparison routines. Authentication events are logged with contextual metadata to support anomaly detection.
+
+Account Recovery and Hardening
+Self-service password reset uses signed one-time tokens, IP throttling, and optional second-factor verification when risk signals are elevated. Account lockout policy applies progressive delays after repeated failures. Administrative unlock workflows require ticket references and second-party approval.
+
+Data Handling and Privacy
+Sensitive fields such as national identifiers, compensation attributes, and performance outcomes are masked in standard views and exposed only under approved role scope. Exports are watermarked, encrypted, and logged. Retention schedules are mapped to legal requirements and local labor law obligations.
+
+Application Security Controls
+Input validation and output encoding are enforced across all forms and APIs. CSRF defenses, strict session management, and secure cookie attributes are enabled by default. Dependency scanning and static analysis run continuously in CI pipelines. High-risk findings block release until resolution or approved exception handling.
+
+Audit and Oversight
+The portal generates immutable audit events for role assignments, compensation edits, off-cycle payments, and employee data exports. Compliance teams review access logs and exception reports monthly. Internal audit validates control effectiveness through recurring testing.
+
+Incident Preparedness
+Incident scenarios cover unauthorized record access, credential stuffing attempts, privilege misuse, and data exfiltration indicators. Response procedures include account containment, token revocation, access review, legal notification assessment, and communication to impacted stakeholders.
+
+Training and User Behavior
+Users receive annual security awareness training with emphasis on phishing resistance, secure handling of employee data, and responsible use of exports. Managers with elevated access complete additional training modules focused on privacy obligations and insider risk prevention.
+
+Summary
+The HR portal security implementation blends identity controls, robust password standards for non-federated users, secure credential storage, monitoring, and governance. Password strength and compromised-password screening are key compensating controls where federation cannot be enforced.

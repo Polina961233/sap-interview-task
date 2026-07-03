@@ -1,0 +1,7 @@
+{
+  "name": "qa-interview-task",
+  "private": true,
+  "scripts": {
+    "db:reset": "./scripts/reset-databases.sh"
+  }
+}
