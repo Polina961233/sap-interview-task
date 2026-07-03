@@ -6,6 +6,10 @@ This repository contains a full-stack interview task:
 - `backend`: Bun + TypeScript API with modular architecture
 - `docker-compose.yml`: local Postgres + Qdrant vector database
 
+For the candidate-facing QA assignment brief, see:
+
+- [`README-QA-TASK.md`](/Users/C5399957/Documents/Code/sap-interview-task/README-QA-TASK.md)
+
 ## Features
 
 - Basic auth for all API routes (except registration)
