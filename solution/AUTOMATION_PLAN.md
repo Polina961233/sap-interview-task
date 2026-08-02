@@ -119,4 +119,4 @@ Set `COMPLIANCE_PDF_PATH` only when intentionally testing a different PDF.
 
 ## CI direction
 
-The GitHub Actions workflow starts fresh PostgreSQL and Qdrant services, runs migrations, installs Chromium, executes the suite, and uploads artifacts even when tests fail. Known defects remain visible in Playwright output while the pipeline stays usable until the application fixes are delivered.
+The GitHub Actions workflow first type-checks the backend, builds the frontend, validates the Playwright framework, and discovers the tests. The dependent E2E job starts fresh PostgreSQL and Qdrant services, waits for both to become ready, runs migrations, installs Chromium, executes the suite, and uploads artifacts even when tests fail. Concurrency cancellation stops obsolete runs for the same branch. A deployment job should be added only when a real target environment, credentials, approval rules, health check, and rollback process exist. Known defects remain visible in Playwright output while the pipeline stays usable until the application fixes are delivered.
