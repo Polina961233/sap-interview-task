@@ -3,10 +3,11 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { basicAuth, primaryUser, testData, uniqueTitle } = require("./fixtures/test-data");
 const { apiBase } = require("./fixtures/environment");
-const pdfPath = process.env.COMPLIANCE_PDF_PATH;
+const repositoryPdfPath = path.resolve(__dirname, "../test-data/international-compliance.pdf");
+const pdfPath = process.env.COMPLIANCE_PDF_PATH || repositoryPdfPath;
 
 test("BUG-009: uploaded compliance PDF is retrieved for an exact question phrase", async ({ request }) => {
-  test.skip(!pdfPath, "Set COMPLIANCE_PDF_PATH to run the supplied-PDF retrieval check");
+  test.skip(!fs.existsSync(pdfPath), `Compliance PDF was not found: ${pdfPath}`);
   test.fail(true, "BUG-009: supplied PDF is indexed but not returned for its exact visitor-control phrase");
   expect(fs.existsSync(pdfPath)).toBeTruthy();
 

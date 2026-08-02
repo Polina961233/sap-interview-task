@@ -57,12 +57,13 @@ If these variables are not provided, the suite uses the addresses documented by 
 
 Reusable test inputs, including test-user credentials and password boundary values, are centralized in `e2e/fixtures/test-data.js`.
 
-To execute the supplied compliance-PDF regression in PowerShell:
+The approved compliance PDF fixture is stored at `test-data/international-compliance.pdf`, so its regression runs automatically:
 
 ```powershell
-$env:COMPLIANCE_PDF_PATH="C:\Users\polinab\Downloads\INTERNATIONAL COMPLIANCE.pdf"
 npx.cmd playwright test e2e/evidence-pdf.spec.js
 ```
+
+`COMPLIANCE_PDF_PATH` remains available only when a tester intentionally wants to override the repository fixture with a different PDF.
 
 ## CI setup in the application fork
 

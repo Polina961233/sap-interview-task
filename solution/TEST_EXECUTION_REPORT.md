@@ -13,20 +13,19 @@
 
 ```text
 24 tests discovered
-22 passed
-2 skipped
-Duration: 40.8 seconds
+23 passed
+1 skipped
+Duration: 52.0 seconds
 Exit code: 0
 ```
 
-The 22 passing results contain:
+The 23 passing results contain:
 
 - 9 normal passing scenarios
-- 13 executed expected-failure regressions for confirmed bugs
+- 14 executed expected-failure regressions for confirmed bugs
 - 1 skipped deployment-configuration check because no external `API_BASE_URL` was supplied
-- 1 skipped compliance-PDF regression because `COMPLIANCE_PDF_PATH` was not set for the full run
 
-An `x` in Playwright output means the known-bug test executed and failed in the documented way. It is not silently skipped. The separate compliance-PDF test was previously executed with the supplied file and reproduced BUG-009.
+An `x` in Playwright output means the known-bug test executed and failed in the documented way. It is not silently skipped. The committed compliance-PDF fixture ran in the full suite and reproduced BUG-009.
 
 ## Key scenarios run
 
@@ -50,7 +49,7 @@ An `x` in Playwright output means the known-bug test executed and failed in the 
 | Browser flow | Login, create, select, answer, and submit | Passed |
 | UI stability | Return to “Select questionnaire” without crashing | Known failure, BUG-007 reproduced |
 | Response history | Editing preserves previously submitted answers | Known failure, BUG-002 reproduced |
-| Compliance PDF | Exact contained phrase returns the uploaded PDF | Previously executed separately; BUG-009 reproduced |
+| Compliance PDF | Exact contained phrase returns the uploaded repository fixture | Known failure, BUG-009 reproduced |
 
 Every finding remaining in `BUG_REPORTS.md` has API, UI, or integration evidence. The former API-address finding was removed: observing localhost in the only available local environment does not prove that deployment configuration is defective. Complete reproduction steps, impact, expected behavior, and actual behavior for confirmed findings are in `BUG_REPORTS.md`.
 
@@ -69,7 +68,6 @@ The BUG-007 execution captured a browser trace and screenshot. API and database 
 | Gap | Why it was not covered | What is needed next |
 |---|---|---|
 | Frontend API address in a deployed environment | Only the local environment was available, where localhost is expected. This does not prove whether the production build can use another API address | Deploy the frontend with a non-local API address, then verify browser requests, HTTPS, and CORS through DevTools or Playwright |
-| Compliance PDF in regular CI | The PDF is outside the repository, so CI cannot access it automatically | Add an approved non-sensitive PDF fixture to the repository or provide `COMPLIANCE_PDF_PATH` in the test environment |
 | Complete registration-to-verification-link flow | The verification token is printed only to backend output; the test suite has no supported way to read a mock inbox or request the token | Provide a test email adapter, mock inbox, or test-only token retrieval interface |
 | Damaged, encrypted, image-only, Unicode, and very large PDF/DOCX coverage | Approved binary fixtures are not yet stored in the repository, and image-only documents may require OCR behavior that the product does not define | Create a versioned, non-sensitive document fixture set and define expected behavior for each file type |
 | Maximum upload size and resource exhaustion | No maximum size, expected processing time, or resource limit is defined. Sending uncontrolled large files could destabilize the shared local environment | Agree file-size and processing limits, then run in an isolated environment with CPU, memory, disk, and timeout monitoring |

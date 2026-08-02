@@ -74,12 +74,13 @@ npm.cmd run test:headed
 npm.cmd run test:runner
 ```
 
-The compliance PDF is optional because it is outside the repository:
+The committed compliance PDF runs automatically:
 
 ```powershell
-$env:COMPLIANCE_PDF_PATH="C:\Users\polinab\Downloads\INTERNATIONAL COMPLIANCE.pdf"
 npx.cmd playwright test e2e/evidence-pdf.spec.js
 ```
+
+Set `COMPLIANCE_PDF_PATH` only when intentionally testing a different PDF.
 
 ## Reliability and evidence
 
