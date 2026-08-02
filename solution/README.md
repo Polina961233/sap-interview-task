@@ -73,11 +73,13 @@ The submission is intended for the `Polina961233/sap-interview-task` fork. Add t
 .github/workflows/e2e.yml
 ```
 
-The workflow checks out one repository, starts its PostgreSQL and Qdrant services, installs the backend and frontend, and runs the Playwright suite from `solution/`. This means CI tests the same application commit that contains the QA changes and directly satisfies the assignment requirement to keep the runnable E2E suite in the repository.
+The workflow checks out one repository and uses two dependent jobs. `Build` type-checks the backend, builds the frontend, and confirms that the Playwright configuration loads and all tests are discoverable. If that succeeds, `Run full-stack Playwright tests` starts PostgreSQL and Qdrant, waits for both services, installs the application, runs migrations, and executes the suite from `solution/`. This prevents E2E infrastructure from starting when the application or automation framework cannot build.
 
 ### GitHub Actions configuration
 
 The workflow runs on pull requests, pushes to `main`, manual requests, and weekdays at `05:00 UTC`. It uses fixed Node and Bun versions and the local services defined by `docker-compose.yml`, so no GitHub repository variables or secrets are required for the current CI run.
+
+Only read access to repository contents is granted. Concurrent runs for the same branch are cancelled when a newer commit is pushed, preventing obsolete pull-request executions from consuming runner time.
 
 Scheduled workflows run only from GitHub's default branch, so the schedule becomes active after `.github/workflows/e2e.yml` is merged into `main`.
 
