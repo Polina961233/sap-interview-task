@@ -1,0 +1,41 @@
+meta {
+  name: 06 Submit Invalid Number
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/questionnaires/{{questionnaireId}}/responses
+  body: json
+  auth: basic
+}
+
+auth:basic {
+  username: {{username}}
+  password: {{password}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "answers": [
+      {
+        "questionId": "{{questionId1}}",
+        "value": "not-a-number"
+      },
+      {
+        "questionId": "{{questionId2}}",
+        "value": "Argon2"
+      }
+    ]
+  }
+}
+
+tests {
+  test("rejects non-number value", function () {
+    expect(res.status).to.equal(400);
+  });
+}

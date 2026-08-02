@@ -1,0 +1,23 @@
+meta {
+  name: List My Responses
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/responses/mine
+  body: none
+  auth: basic
+}
+
+auth:basic {
+  username: {{username}}
+  password: {{password}}
+}
+
+tests {
+  test("returns response summaries", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body).to.be.an("array");
+  });
+}

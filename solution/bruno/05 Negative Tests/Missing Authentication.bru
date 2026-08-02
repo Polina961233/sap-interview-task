@@ -1,0 +1,17 @@
+meta {
+  name: Missing Authentication
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/questionnaires
+  body: none
+  auth: none
+}
+
+tests {
+  test("rejects anonymous request", function () {
+    expect(res.status).to.equal(401);
+  });
+}

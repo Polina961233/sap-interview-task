@@ -1,0 +1,37 @@
+meta {
+  name: 07 Submit Incomplete Response
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/questionnaires/{{questionnaireId}}/responses
+  body: json
+  auth: basic
+}
+
+auth:basic {
+  username: {{username}}
+  password: {{password}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "answers": [
+      {
+        "questionId": "{{questionId1}}",
+        "value": "12"
+      }
+    ]
+  }
+}
+
+tests {
+  test("rejects incomplete answers", function () {
+    expect(res.status).to.equal(400);
+  });
+}

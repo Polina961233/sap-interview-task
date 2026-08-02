@@ -1,0 +1,42 @@
+meta {
+  name: 04 Update Questionnaire
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/questionnaires/{{questionnaireId}}
+  body: json
+  auth: basic
+}
+
+auth:basic {
+  username: {{username}}
+  password: {{password}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Bruno Security Questionnaire Updated",
+    "questions": [
+      {
+        "prompt": "What is the minimum password length?",
+        "answerType": "number"
+      },
+      {
+        "prompt": "Which approved password hashing algorithm is used?",
+        "answerType": "text",
+        "regex": "^(Argon2|bcrypt)$"
+      }
+    ]
+  }
+}
+
+docs {
+  Warning: BUG-002. Updating deletes and recreates questions and can delete historical response answers.
+  Run Get Questionnaire again afterward to refresh questionId1 and questionId2.
+}

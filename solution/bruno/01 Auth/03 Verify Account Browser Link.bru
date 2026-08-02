@@ -1,0 +1,21 @@
+meta {
+  name: 03 Verify Account Browser Link
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/auth/verify?token={{verificationToken}}
+  body: none
+  auth: none
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  This endpoint normally redirects to the frontend with verified=success or verified=error.
+  Use either this request or the POST verification request, not both with the same token.
+}

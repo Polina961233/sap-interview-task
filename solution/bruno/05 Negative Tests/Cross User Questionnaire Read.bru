@@ -1,0 +1,26 @@
+meta {
+  name: Cross User Questionnaire Read
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/questionnaires/{{questionnaireId}}
+  body: none
+  auth: basic
+}
+
+auth:basic {
+  username: {{secondaryUsername}}
+  password: {{secondaryPassword}}
+}
+
+tests {
+  test("does not expose another user's questionnaire", function () {
+    expect(res.status).to.equal(404);
+  });
+}
+
+docs {
+  Register and verify the secondary user first. questionnaireId must belong to the primary user.
+}

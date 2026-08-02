@@ -1,0 +1,38 @@
+meta {
+  name: Whitespace Question Prompt - Known Defect
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/questionnaires
+  body: json
+  auth: basic
+}
+
+auth:basic {
+  username: {{username}}
+  password: {{password}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Whitespace Prompt Manual Test",
+    "questions": [
+      {
+        "prompt": "   ",
+        "answerType": "text"
+      }
+    ]
+  }
+}
+
+docs {
+  Expected: HTTP 400 because the prompt is blank after trimming.
+  Current behavior (BUG-012): HTTP 201.
+  Change the title before repeating because questionnaire titles are unique per owner.
+}
