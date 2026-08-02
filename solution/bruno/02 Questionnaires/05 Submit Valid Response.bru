@@ -1,0 +1,42 @@
+meta {
+  name: 05 Submit Valid Response
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/questionnaires/{{questionnaireId}}/responses
+  body: json
+  auth: basic
+}
+
+auth:basic {
+  username: {{username}}
+  password: {{password}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "answers": [
+      {
+        "questionId": "{{questionId1}}",
+        "value": "12"
+      },
+      {
+        "questionId": "{{questionId2}}",
+        "value": "Argon2"
+      }
+    ]
+  }
+}
+
+tests {
+  test("creates response", function () {
+    expect(res.status).to.equal(201);
+    expect(res.body.id).to.be.a("string");
+  });
+}

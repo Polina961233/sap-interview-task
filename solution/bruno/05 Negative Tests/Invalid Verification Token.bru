@@ -1,0 +1,27 @@
+meta {
+  name: Invalid Verification Token
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/auth/verify
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "token": "invalid-token"
+  }
+}
+
+tests {
+  test("rejects invalid verification token", function () {
+    expect(res.status).to.equal(400);
+  });
+}

@@ -1,0 +1,33 @@
+meta {
+  name: Upload Evidence
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/evidence/upload
+  body: multipartForm
+  auth: basic
+}
+
+auth:basic {
+  username: {{username}}
+  password: {{password}}
+}
+
+body:multipart-form {
+  file: @file({{evidenceFilePath}})
+}
+
+tests {
+  test("indexes evidence chunks", function () {
+    expect(res.status).to.equal(201);
+    expect(res.body.evidenceFileId).to.be.a("string");
+    expect(res.body.chunks).to.be.greaterThan(0);
+  });
+}
+
+docs {
+  Set evidenceFilePath in the Local environment to an absolute PDF, DOCX, or TXT path.
+  Do not manually set Content-Type; Bruno must generate the multipart boundary.
+}

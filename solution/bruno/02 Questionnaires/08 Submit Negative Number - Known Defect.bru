@@ -1,0 +1,34 @@
+meta {
+  name: 08 Submit Negative Number - Known Defect
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{baseUrl}}/questionnaires/{{questionnaireId}}/responses
+  body: json
+  auth: basic
+}
+
+auth:basic {
+  username: {{username}}
+  password: {{password}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "answers": [
+      { "questionId": "{{questionId1}}", "value": "-12" },
+      { "questionId": "{{questionId2}}", "value": "Argon2" }
+    ]
+  }
+}
+
+docs {
+  Expected for a positive-integer business field: HTTP 400.
+  Current behavior (BUG-008): HTTP 201 because only NaN is rejected.
+}

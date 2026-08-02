@@ -1,0 +1,21 @@
+{
+  "name": "questionnaire-evidence-qa-solution",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test e2e/auth.spec.js e2e/questionnaire-api.spec.js e2e/error-contract.spec.js e2e/verification-expiry.spec.js e2e/response-history.spec.js",
+    "test:ui": "playwright test e2e/questionnaire-ui.spec.js e2e/deployment-ui.spec.js",
+    "test:evidence": "playwright test e2e/evidence-txt.spec.js e2e/evidence-deletion-consistency.spec.js e2e/upload-cleanup.spec.js e2e/known-defects.spec.js",
+    "test:known-defects": "playwright test --grep 'BUG-'",
+    "test:headed": "playwright test --headed",
+    "test:runner": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "check": "playwright test --list"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "bcryptjs": "^2.4.3",
+    "pg": "^8.16.0"
+  }
+}
